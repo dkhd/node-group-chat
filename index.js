@@ -10,7 +10,7 @@ app.get('/', function(req, res) {
 io.sockets.on('connection', function(socket) {
     socket.on('username', function(username) {
         socket.username = username;
-        io.emit('is_online', '🔵 <i>' + socket.username + ' join the chat..</i>');
+        io.emit('is_online', '🔵 <i>' + socket.username + ' joined the chat..</i>');
     });
 
     socket.on('disconnect', function(username) {

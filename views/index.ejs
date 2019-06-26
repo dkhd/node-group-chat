@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Group Chat on Node.js</title>
+    <title>Dev Chat</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font: 13px Helvetica, Arial; }
@@ -15,16 +15,19 @@
     <script src="../../socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
   </head>
-  <body>
+  <body class="chat-body" onload="newUpdate()">
     <ul id="messages"></ul>
     <form action="/" method="POST" id="chatForm">
-      <input id="txt" autocomplete="off" autofocus="on" oninput="isTyping()" placeholder="type your message here..." /><button>Send</button>
+      <input id="txt" autocomplete="off" autofocus="on" placeholder="type your message here..." /><button>Send</button>
     </form>
     <script>
-            var socket = io.connect('http://localhost:8080');
+            var host = window.location.hostname;
+            var socket = io.connect('http://' + host + ':8080');
+            var count = 0;
 
             // submit text message without reload/refresh the page
-            $('form').submit(function(e){
+            $('form').submit(function(e)
+            {
                 e.preventDefault(); // prevents page reloading
                 socket.emit('chat_message', $('#txt').val());
                 $('#txt').val('');
@@ -32,12 +35,14 @@
             });
 
             // append the chat text message
-            socket.on('chat_message', function(msg){
+            socket.on('chat_message', function(msg)
+            {
                 $('#messages').append($('<li>').html(msg));
             });
 
             // append text if someone is online
-            socket.on('is_online', function(username) {
+            socket.on('is_online', function(username)
+            {
                 $('#messages').append($('<li>').html(username));
             });
 
@@ -45,6 +50,33 @@
             var username = prompt('Please tell me your name');
             socket.emit('username', username);
 
+            var title = document.title;
+
+            function changeTitle()
+            {
+              var message = '';
+              //if (message != checkCurrentMessage()) {
+                //count++;
+              //}
+              count++;
+              var newTitle = '(' + count + ') ' + title;
+              document.title = newTitle;
+            }
+
+            function newUpdate()
+            {
+              update = setInterval(changeTitle, 2000);
+            }
+
+            function checkCurrentMessage()
+            {
+              return document.getElementById('messages').textContent;
+            }
+
+            // call checkCurrentMessage every 2 seconds
+            function newMessage() {
+              updateMessage = setInterval(checkCurrentMessage, 2000);
+            }
     </script>
   </body>
 </html>
