@@ -15,7 +15,7 @@
     <script src="../../socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
   </head>
-  <body class="chat-body" onload="newUpdate()">
+  <body class="chat-body"> <!--onload="newUpdate()"-->
     <ul id="messages"></ul>
     <form action="/" method="POST" id="chatForm">
       <input id="txt" autocomplete="off" autofocus="on" placeholder="type your message here..." /><button>Send</button>
@@ -52,31 +52,21 @@
 
             var title = document.title;
 
-            function changeTitle()
-            {
-              var message = '';
+            //function changeTitle()
+            //{
+              //var message = '';
               //if (message != checkCurrentMessage()) {
                 //count++;
               //}
-              count++;
-              var newTitle = '(' + count + ') ' + title;
-              document.title = newTitle;
-            }
+              //count++;
+              //var newTitle = '(' + count + ') ' + title;
+              //document.title = newTitle;
+            //}
 
-            function newUpdate()
-            {
-              update = setInterval(changeTitle, 2000);
-            }
-
-            function checkCurrentMessage()
-            {
-              return document.getElementById('messages').textContent;
-            }
-
-            // call checkCurrentMessage every 2 seconds
-            function newMessage() {
-              updateMessage = setInterval(checkCurrentMessage, 2000);
-            }
+            //function newUpdate()
+            //{
+              //update = setInterval(changeTitle, 2000);
+            //}
     </script>
   </body>
 </html>
