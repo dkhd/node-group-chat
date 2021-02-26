@@ -18,7 +18,7 @@
   <body>
     <ul id="messages"></ul>
     <form action="/" method="POST" id="chatForm">
-      <input id="txt" autocomplete="off" autofocus="on" oninput="isTyping()" placeholder="type your message here..." /><button>Send</button>
+      <input required id="txt" autocomplete="off" autofocus="on" oninput="isTyping()" placeholder="type your message here..." /><button type="submit">Send</button>
     </form>
     <script>
             var socket = io.connect('http://localhost:8080');
