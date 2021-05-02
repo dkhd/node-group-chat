@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Simple Group Chat on Node.js</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,37 +14,72 @@
     </style>
     <script src="../../socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-  </head>
-  <body>
+</head>
+<body>
+
     <ul id="messages"></ul>
+      
     <form action="/" method="POST" id="chatForm">
-      <input id="txt" autocomplete="off" autofocus="on" oninput="isTyping()" placeholder="type your message here..." /><button>Send</button>
+        <input id="txt" autocomplete="off" autofocus="on" oninput="isTyping()" placeholder="type your message here..." />
+        <button type="button">Send</button>
     </form>
+
     <script>
-            var socket = io.connect('http://localhost:8080');
+    // get socket configuration
+    const WS_HOST = String("<%= ws_host %>");
+    const WS_PORT = Number("<%= ws_port %>");
+    const WS_SERVER_URL = String("<%= ws_prot %>")+WS_HOST+':'+WS_PORT;
+    // initialize the socket connection
+    const socket = io.connect(WS_SERVER_URL);
 
-            // submit text message without reload/refresh the page
-            $('form').submit(function(e){
-                e.preventDefault(); // prevents page reloading
-                socket.emit('chat_message', $('#txt').val());
-                $('#txt').val('');
-                return false;
-            });
+    // submit text message without reload/refresh the page
+    $('form').submit(function(e){
+        e.preventDefault(); // prevents page reloading
+        socket.emit('chat_message', $('#txt').val());
+        $('#txt').val('');
+        return false;
+    });
 
-            // append the chat text message
-            socket.on('chat_message', function(msg){
-                $('#messages').append($('<li>').html(msg));
-            });
+    // append the chat text message
+    socket.on('chat_message', function(data, _username, _message){
+        $('#messages').append($('<li>').html(data));
+        if($('#is-typing--'+_username).length) {
+            $('#is-typing--'+_username).remove();
+        }
+    });
 
-            // append text if someone is online
-            socket.on('is_online', function(username) {
-                $('#messages').append($('<li>').html(username));
-            });
+    // append text if someone is online
+    socket.on('is_online', function(data) {
+        $('#messages').append($('<li>').html(data));
+    });
 
-            // ask username
-            var username = prompt('Please tell me your name');
-            socket.emit('username', username);
+    // send typing event
+    function isTyping() {
+        socket.emit('is_typing', username);
+    }
 
+    // append if someone is typing
+    socket.on('is_typing', function(data, _username) {
+        const eluser_istyping = $('#is-typing--'+_username);
+        if(!eluser_istyping.length) {
+            $('#messages').append($('<li id="is-typing--'+_username+'">').html(data));
+        }
+        setInterval(()=>{
+            if(eluser_istyping.length) {
+                eluser_istyping.remove();
+            }
+        }, 2000);
+        setTimeout(()=> {
+            if(eluser_istyping.length) {
+                eluser_istyping.remove();
+            }
+        }, 2000);
+    });
+
+    // ask username
+    var username = prompt('Please tell me your name');
+    socket.emit('username', username);
     </script>
-  </body>
+
+</body>
 </html>

@@ -1,16 +1,17 @@
 {
   "name": "node-simple-group-chat",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A simple group chat built using Node.js and Socket.io",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
-  "author": "Diky Hadna",
+  "author": "Created by Diky Hadna, Updated by Primo",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "socket.io": "^2.2.0"
+    "ejs": "^2.7.4",
+    "express": "^4.17.1",
+    "socket.io": "^2.4.1"
   }
 }

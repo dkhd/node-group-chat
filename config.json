@@ -1,0 +1,7 @@
+{
+    "websocket": {
+        "protocol": "http://",
+        "host": "localhost",
+        "port": 44331
+    }
+}

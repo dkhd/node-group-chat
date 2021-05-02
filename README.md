@@ -7,5 +7,5 @@ A simple and (hopefully) to-the-point tutorial to build your first group-chat ap
 Run the program by using
 
 ```shell
-$ node index.js
+node index.js
 ```
