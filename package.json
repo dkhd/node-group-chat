@@ -9,8 +9,8 @@
   "author": "Diky Hadna",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "socket.io": "^2.2.0"
+    "ejs": "^2.7.4",
+    "express": "^4.17.1",
+    "socket.io": "^2.4.1"
   }
 }
